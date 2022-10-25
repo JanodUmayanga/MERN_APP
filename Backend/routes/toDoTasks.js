@@ -7,8 +7,12 @@ const {
     deleteTask,
     updateTask
 } = require('../controllers/toDoController')
+const requireAuth = require('../middleware/requireAuth')
 
 const router = express.Router()
+
+//require auth for all routes
+router.use(requireAuth)
 
 //GET all tasks
 router.get('/', getTasks)

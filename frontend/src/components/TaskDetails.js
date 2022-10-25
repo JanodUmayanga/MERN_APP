@@ -1,12 +1,21 @@
 import { useTasksContext } from "../hooks/useTasksContext"
-
+import { useAuthContext } from "../hooks/useAuthContext"
 const TaskDetails = ({ task }) => {
 
     const {dispatch} = useTasksContext()
+    const user = useAuthContext()
 
     const handleClick1 = async () =>{
+        
+        if(!user) {
+            return
+        }
+        
         const response = await fetch('/api/todotasks/' + task._id, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
         })
         const json = await response.json()
 
